@@ -1,8 +1,9 @@
 // ==UserScript==
-// @name           Duolingo ADHC — Hitos de barra de progreso (para los que se aburren / se distraen)
+// @name           Duolingo ADHC — Barra de progreso con hitos (para distraídos / aburridos)
 // @name:en        Duolingo ADHC — Progress bar milestones (for the easily distracted / bored)
+// @name:es        Duolingo ADHC — Hitos de barra de progreso (para los que se aburren / se distraen)
 // @namespace      https://github.com/MoriNo23/duolingo-adhc
-// @version        1.5.1
+// @version        1.5.2
 // @description    Divide la barra de progreso en hitos con rarezas progresivas (madera→bronce→plata→oro→platino→legendario) + burst al cruzar hito + panel de ajustes EN/ES. Mantiene el diseño nativo Duolingo.
 // @description:en Divides the lesson progress bar into milestones with progressive rarities (wood→bronze→silver→gold→platinum→legendary) + particle burst on milestone + EN/ES settings panel. Keeps Duolingo's native design.
 // @author         Mori
