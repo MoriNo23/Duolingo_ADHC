@@ -53,29 +53,6 @@ For minds with **ADHD** or anyone prone to boredom/distraction, a long and unifo
 
 ---
 
-## Develop
-
-```bash
-# local preview (harness lives in working tree, no servidor remoto necesario)
-python3 -m http.server 8765
-# then: http://127.0.0.1:8765/showcase.html
-```
-
-El showcase (`showcase.html` + `harness-state.html`) sirve para inspección visual. Las capturas de PNG/Vídeo **se hacen manualmente con Spectacle** — no hay botones de captura automática.
-
-### Technical Notes
-
-* Locale metadata: `@name` (English primary) + `@name:es`; `@description` + `@description:es`.
-* CSS selectors target `.oCRF1`/`._3yKMC`/`._27NV6` (lesson bar) exclusively (never `/learn`).
-* `GM_addStyle` + `MutationObserver` sobre `aria-valuenow` para re-render. Runtime sin dependencias externas (axe-core y html2canvas fueron dev-only).
-
-### Roadmap
-
-* Shine animation polish ✅ (v1.4.9)
-* `findBar()` fallback selector for Duolingo class changes
-* Per-device config export/import
-* Compact mode + animation toggle
-
 ## License
 
 MIT — see `LICENSE`.
