@@ -53,6 +53,15 @@ For minds with **ADHD** or anyone prone to boredom/distraction, a long and unifo
 
 ---
 
+## Roadmap
+
+* ✅ Shine animation polish (sweep + fixed shines + flash — v1.4.9)
+* `findBar()` fallback selector for Duolingo class changes
+* Per-device config export/import
+* Compact mode + animation toggle
+
+---
+
 ## License
 
 MIT — see `LICENSE`.
