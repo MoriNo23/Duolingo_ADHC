@@ -9,61 +9,72 @@
 
 </div>
 
-## Install
-
-- **Greasy Fork**: https://greasyfork.org/es-419/scripts/590127-duolingo-adhc-progress-bar-milestones-for-the-easily-distracted-bored — click **Install** and confirm in your userscript manager.
-- **Manual**: install `duolingo-adhc.user.js` in Tampermonkey / Violentmonkey / Greasemonkey.
-- **Prerequisites**: a userscript manager extension. Refresh any open Duolingo lesson tab after installing.
-
-## What it does
-
-Turns the native Duolingo lesson progress bar into a **milestone-based reward system** with progressive material rarities:
-
-| Tier | Rarity | Effect |
-|------|--------|--------|
-| 1 | 🪵 Wood | humble start |
-| 2 | 🥉 Bronze | first milestone |
-| 3 | 🥈 Silver | halfway |
-| 4 | 🥇 Gold | victory near |
-| 5 | 🩵 Platinum | high-tier milestone |
-| 6 | 👑 Legendary | animated gradient + light sweeps + dynamic shines |
-
-Crossing any milestone triggers a **particle burst** (color-matched to the tier). Reaching 100% unlocks a **massive celebratory explosion**.
-
-- Targets **only the lesson progress bar** (not the `/learn` challenge bar).
-- Preserves Duolingo's native Feather Design System (rounded pills, subtle shadows, auto light/dark mode).
-- **In-app settings panel** (`⚙️` button): adjust milestones (1→12), toggle numbers, switch language (EN/ES).
-
-## Preview
-
 <video src="https://raw.githubusercontent.com/MoriNo23/Duolingo_ADHC/master/uiAni.webm"
        autoplay loop muted playsinline width="560">
 </video>
 
-`uiAni.webm` — bar animating from 0% → 100%, recorded with Spectacle.
+## Additional Information
 
-## Screenshot Workflow
+[uiAni.webm](https://github.com/user-attachments/assets/4acc71b3-d2b1-41d5-b47b-947f0674b978)
 
-The repo keeps only production files. Local dev harnesses (`showcase.html`, `harness-state.html`) are used for inspection + manual captures:
+### 🎯 Why this Userscript?
 
-1. Serve locally: `python3 -m http.server 8765` from the repo dir.
-2. Open `http://localhost:8765/showcase.html`.
-3. Capture each component manually with **Spectacle** (PNG for docs, WebM for motion).
-4. For GIF: `ffmpeg -i input.webm -vf "fps=20,scale=560:-1:flags=lanczos,palettegen" palette.png && ffmpeg -i input.webm -i palette.png -filter_complex "fps=20,scale=560:-1:flags=lanczos[x];[x][1:v]paletteuse" output.gif`.
+For minds with **ADHD** or anyone prone to boredom/distraction, a long and uniform progress bar can feel tedious and endless. **Duolingo ADHC** turns the native progress bar into a milestone-based reward system with **progressive material rarities**:
 
-## Technical Notes
+1. 🪵 **Wood**: The humble beginning (encourages you to get past it quickly!).
+2. 🥉 **Bronze**: First milestone reached.
+3. 🥈 **Silver**: Halfway there.
+4. 🥇 **Gold**: Victory is near.
+5. 🩵 **Platinum**: High-tier milestone.
+6. 👑 **Legendary**: The final section features an animated gradient glow, light sweeps, and dynamic shines.
 
-- `@name`/`@name:es` + `@description`/`@description:es` locales para Greasy Fork (English primary).
-- CSS selectors target `.oCRF1`/`._3yKMC`/`._27NV6` (lesson bar) exclusively.
-- `GM_addStyle` para inyección de capas de rareza/sweep/shines; `MutationObserver` sobre `aria-valuenow` para re-render.
-- Sin dependencias externas en runtime (axe-core removido; fue dev-only).
+---
 
-## Roadmap
+### ✨ Key Features
 
-- Shine animation polish (sweep + fixed shines + flash) ✅ v1.4.9
-- `findBar()` fallback selector for Duolingo class changes
-- Per-device config export/import
-- Compact mode + animation toggle
+* **Particle Bursts:** Crossing any milestone triggers a burst of color-matched particles. Reaching 100% unlocks a **massive celebratory explosion**.
+* **Native Design Integration:** Seamlessly blends with Duolingo's aesthetic (rounded pills, hard *Feather* shadows, and automatic **Light/Dark Mode** detection).
+* **In-App Settings Panel:** Click the floating ⚙️ icon to customize:
+  * Adjust the number of milestones/dividers (from 1 to 12).
+  * Toggle milestone numbers on/off.
+  * Switch between **English** and **Spanish** UI.
+* **Lightweight & Clean:** Optimized performance without disrupting the site's native accessibility tree.
+
+---
+
+### ⚙️ Installation & How to Use
+
+1. **Prerequisite:** Install a userscript manager extension in your browser (e.g., Tampermonkey).
+2. **Install:** Click the **Install** button at the top of this page.
+3. **Usage:**
+   * Open any lesson or practice session on **Duolingo**.
+   * The progress bar will automatically split into milestones based on your settings.
+   * Click the ⚙️ button in the top-right corner anytime to open the settings panel and adjust preferences in real time.
+
+---
+
+## Develop
+
+```bash
+# local preview (harness lives in working tree, no servidor remoto necesario)
+python3 -m http.server 8765
+# then: http://127.0.0.1:8765/showcase.html
+```
+
+El showcase (`showcase.html` + `harness-state.html`) sirve para inspección visual. Las capturas de PNG/Vídeo **se hacen manualmente con Spectacle** — no hay botones de captura automática.
+
+### Technical Notes
+
+* Locale metadata: `@name` (English primary) + `@name:es`; `@description` + `@description:es`.
+* CSS selectors target `.oCRF1`/`._3yKMC`/`._27NV6` (lesson bar) exclusively (never `/learn`).
+* `GM_addStyle` + `MutationObserver` sobre `aria-valuenow` para re-render. Runtime sin dependencias externas (axe-core y html2canvas fueron dev-only).
+
+### Roadmap
+
+* Shine animation polish ✅ (v1.4.9)
+* `findBar()` fallback selector for Duolingo class changes
+* Per-device config export/import
+* Compact mode + animation toggle
 
 ## License
 
