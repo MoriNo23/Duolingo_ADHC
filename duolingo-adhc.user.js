@@ -2,7 +2,7 @@
 // @name           Duolingo ADHC — Hitos de barra de progreso (para los que se aburren / se distraen)
 // @name:en        Duolingo ADHC — Progress bar milestones (for the easily distracted / bored)
 // @namespace      https://github.com/MoriNo23/duolingo-adhc
-// @version        1.5.0
+// @version        1.5.1
 // @description    Divide la barra de progreso en hitos con rarezas progresivas (madera→bronce→plata→oro→platino→legendario) + burst al cruzar hito + panel de ajustes EN/ES. Mantiene el diseño nativo Duolingo.
 // @description:en Divides the lesson progress bar into milestones with progressive rarities (wood→bronze→silver→gold→platinum→legendary) + particle burst on milestone + EN/ES settings panel. Keeps Duolingo's native design.
 // @author         Mori
@@ -98,7 +98,7 @@ function levelName(i, T) {
 function segmentCount(separators) { return separators + 1; }
 function segLeft(i, T) { return (i * 100) / T; }          // % izquierdo del tramo i
 function segLength(T) { return 100 / T; }                  // ancho de cada tramo en %
-function sepPos(i, separators) { return Math.round((i / (separators + 1)) * 1000) / 10; } // % izquierdo del separador i (redondeo evita float 20.0000000004)
+function sepPos(i, separators) { return (i * 100) / (separators + 1); } // % del hito = límite EXACTO del tramo i (mismo origen que segLeft)
 // progreso del tramo i dado el pct global (ancho en %)
 function segProgress(pct, i, T) {
   const start = segLeft(i, T);
@@ -112,7 +112,7 @@ function currentSeg(pct, T) {
 // cuántos separadores están alcanzados, dado pct global
 function reachedSeparators(pct, separators) {
   let n = 0;
-  for (let i = 1; i <= separators; i++) if (pct >= sepPos(i, separators)) n++;
+  for (let i = 1; i <= separators; i++) if (pct + 1e-9 >= sepPos(i, separators)) n++; // épsilon caza floats 20.0000000004
   return n;
 }
 // color final de un tramo (legendario conserva su propio background CSS)
@@ -403,6 +403,13 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
           const c = levelColor(i, T);
           seg.style.background = c;
           seg.style.boxShadow = i < curIdx ? '0 0 6px rgba(255,255,255,.35)' : 'none';
+          if (i === curIdx) {
+            // hito en progreso: desaturado/transparente al empezar, satura al completarlo
+            const done = Math.min(1, segDone / segLen);
+            seg.style.opacity = String(0.25 + 0.75 * done);
+          } else {
+            seg.style.opacity = '1';
+          }
         }
       });
 
@@ -410,7 +417,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       overlay.querySelectorAll('.adhc-sep').forEach(sep => {
         const i = parseFloat(sep.dataset.sep);
         const hitAt = sepPos(i, cfg.separators);
-        if (pct >= hitAt) {
+        if (pct + 1e-9 >= hitAt) {
           hits++;
           const tramoIdx = i - 1;
           const c = levelColor(tramoIdx, T);
